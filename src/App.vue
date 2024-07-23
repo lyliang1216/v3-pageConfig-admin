@@ -3,6 +3,7 @@ import { useTheme } from '@/hooks/useTheme'
 import { ElNotification } from 'element-plus'
 // 将 Element Plus 的语言设置为中文
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import { ref } from 'vue'
 
 const { initTheme } = useTheme()
 
@@ -19,6 +20,9 @@ ElNotification({
   duration: 0,
   position: 'bottom-right'
 })
+
+const a = ref<number>(0)
+a.value = 1
 </script>
 
 <template>

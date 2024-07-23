@@ -1,7 +1,9 @@
 {
   "prettier.enable": true,
+  "editor.tabSize": 2,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.organizeImports": "explicit",
+    "source.fixAll": "explicit"
   },
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

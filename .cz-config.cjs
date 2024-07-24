@@ -22,10 +22,10 @@ module.exports = {
     footer: '请输入要关闭的issue(可选):',
     confirmCommit: '确认使用以上信息提交？(y/n)'
   },
-  scopes: [],
-  allowBreakingChanges: [],
+  allowBreakingChanges: ['feat', 'fix'],
   // 跳过问题：修改范围，自定义修改范围，详细描述，issue相关
-  allowCustomScopes: true,
+  allowCustomScopes: false,
   skipQuestions: ['scope', 'customScope', 'body', 'footer', 'breaking'], // subject描述文字长度最长是72
-  subjectLimit: 72
+  subjectLimit: 72,
+  askForBreakingChangeFirst: false
 }

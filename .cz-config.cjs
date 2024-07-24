@@ -1,71 +1,29 @@
 module.exports = {
   types: [
-    { value: 'feat', name: 'feat:     A new feature' },
-    { value: 'fix', name: 'fix:      A bug fix' },
-    { value: 'docs', name: 'docs:     Documentation only changes' },
-    {
-      value: 'style',
-      name: 'style:    Changes that do not affect the meaning of the code\n            (white-space, formatting, missing semi-colons, etc)'
-    },
-    {
-      value: 'refactor',
-      name: 'refactor: A code change that neither fixes a bug nor adds a feature'
-    },
-    {
-      value: 'perf',
-      name: 'perf:     A code change that improves performance'
-    },
-    { value: 'test', name: 'test:     Adding missing tests' },
-    {
-      value: 'chore',
-      name: 'chore:    Changes to the build process or auxiliary tools\n            and libraries such as documentation generation'
-    },
-    { value: 'revert', name: 'revert:   Revert to a commit' },
-    { value: 'WIP', name: 'WIP:      Work in progress' }
+    { value: 'feat', name: 'feat: 新功能' },
+    { value: 'fix', name: 'fix: bug修复' },
+    { value: 'refactor', name: 'refactor: 代码重构(既没有bug修复也没有新增功能)' },
+    { value: 'style', name: 'style: 不影响代码含义的更改（空格、格式、缺少分号等）, 注意不是css修改' },
+    { value: 'build', name: 'build: 编译相关的修改，例如发布版本、对项目构建或者依赖的改动' },
+    { value: 'chore', name: 'chore: 构建过程或辅助工具的变动' },
+    { value: 'ci', name: 'ci: 持续集成修改，比如script命令' },
+    { value: 'docs', name: 'docs: 文档变更' },
+    { value: 'perf', name: 'perf: 优化相关，比如提升性能、体验' },
+    { value: 'test', name: 'test: 测试用例修改' },
+    { value: 'revert', name: 'revert: 回滚到上一个版本' }
   ],
-
-  scopes: [],
-
-  usePreparedCommit: false, // to re-use commit from ./.git/COMMIT_EDITMSG
-  allowTicketNumber: false,
-  isTicketNumberRequired: false,
-  ticketNumberPrefix: 'TICKET-',
-  ticketNumberRegExp: '\\d{1,5}',
-
-  // it needs to match the value for field type. Eg.: 'fix'
-  /*
-  scopeOverrides: {
-    fix: [
-
-      {name: 'merge'},
-      {name: 'style'},
-      {name: 'e2eTest'},
-      {name: 'unitTest'}
-    ]
-  },
-  */
-  // override the messages, defaults are as follows
+  // 消息步骤，正常只需要选择
   messages: {
-    type: "Select the type of change that you're committing:",
-    scope: '\nDenote the SCOPE of this change (optional):',
-    // used if allowCustomScopes is true
-    customScope: 'Denote the SCOPE of this change:',
-    subject: 'Write a SHORT, IMPERATIVE tense description of the change:\n',
-    body: 'Provide a LONGER description of the change (optional). Use "|" to break new line:\n',
-    breaking: 'List any BREAKING CHANGES (optional):\n',
-    footer: 'List any ISSUES CLOSED by this change (optional). E.g.: #31, #34:\n',
-    confirmCommit: 'Are you sure you want to proceed with the commit above?'
+    type: '请选择提交类型:',
+    customScope: '请输入修改范围(可选):',
+    subject: '请简要描述提交(必填):',
+    body: '请输入详细描述(可选):',
+    footer: '请输入要关闭的issue(可选):',
+    confirmCommit: '确认使用以上信息提交？(y/n)'
   },
-
-  allowCustomScopes: true,
   allowBreakingChanges: ['feat', 'fix'],
-  // skip any questions you want
-  skipQuestions: ['scope', 'body', 'customScope'],
-
-  // limit subject length
-  subjectLimit: 100
-  // breaklineChar: '|', // It is supported for fields body and footer.
-  // footerPrefix : 'ISSUES CLOSED:'
-
-  // askForBreakingChangeFirst : true, // default is false
+  allowCustomScopes: false,
+  skipQuestions: ['scope', 'customScope', 'footer', 'breaking'],
+  subjectLimit: 72,
+  askForBreakingChangeFirst: false
 }

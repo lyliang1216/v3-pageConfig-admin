@@ -65,6 +65,7 @@ module.exports = {
       ])
       .then((answers) => {
         const { type, subject, body, footer } = answers
+        console.log(answers, 'answersanswers')
         // 最后过滤，跳过body会存在undefined问题，issues以解决，但vscode插件没发布
         let commitMessage = `${type}: ${subject}`
 

@@ -23,7 +23,7 @@ module.exports = {
   },
   allowBreakingChanges: ['feat', 'fix'],
   allowCustomScopes: false,
-  skipQuestions: ['scope', 'customScope', 'footer', 'breaking'],
+  skipQuestions: ['scope', 'customScope', 'body', 'footer', 'breaking'],
   subjectLimit: 72,
   askForBreakingChangeFirst: false,
   prompter(cz, commit) {
@@ -65,6 +65,7 @@ module.exports = {
       ])
       .then((answers) => {
         const { type, subject, body, footer } = answers
+        // 最后过滤，跳过body会存在undefined问题，issues以解决，但vscode插件没发布
         let commitMessage = `${type}: ${subject}`
 
         if (body && body.trim()) {

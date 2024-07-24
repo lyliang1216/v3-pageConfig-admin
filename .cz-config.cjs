@@ -25,5 +25,57 @@ module.exports = {
   allowCustomScopes: false,
   skipQuestions: ['scope', 'customScope', 'footer', 'breaking'],
   subjectLimit: 72,
-  askForBreakingChangeFirst: false
+  askForBreakingChangeFirst: false,
+  prompter(cz, commit) {
+    const inquirer = cz.prompt
+
+    inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'))
+
+    inquirer
+      .prompt([
+        {
+          type: 'list',
+          name: 'type',
+          message: '请选择提交类型:',
+          choices: module.exports.types
+        },
+        {
+          type: 'input',
+          name: 'subject',
+          message: '请简要描述提交(必填):',
+          validate: (input) => (input.length > 0 ? true : '提交信息不能为空')
+        },
+        {
+          type: 'input',
+          name: 'body',
+          message: '请输入详细描述(可选):',
+          when: !module.exports.skipQuestions.includes('body')
+        },
+        {
+          type: 'input',
+          name: 'footer',
+          message: '请输入要关闭的issue(可选):',
+          when: !module.exports.skipQuestions.includes('footer')
+        },
+        {
+          type: 'confirm',
+          name: 'confirmCommit',
+          message: '确认使用以上信息提交？(y/n)'
+        }
+      ])
+      .then((answers) => {
+        const { type, subject, body, footer } = answers
+        let commitMessage = `${type}: ${subject}`
+
+        if (body && body.trim()) {
+          commitMessage += `\n\n${body}`
+        }
+
+        if (footer && footer.trim()) {
+          commitMessage += `\n\n${footer}`
+        }
+
+        commit(commitMessage)
+      })
+  }
 }

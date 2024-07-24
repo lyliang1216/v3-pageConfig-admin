@@ -28,9 +28,7 @@ module.exports = {
   askForBreakingChangeFirst: false,
   prompter(cz, commit) {
     const inquirer = cz.prompt
-
     inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'))
-
     inquirer
       .prompt([
         {
@@ -45,12 +43,16 @@ module.exports = {
           message: '请简要描述提交(必填):',
           validate: (input) => (input.length > 0 ? true : '提交信息不能为空')
         },
-        {
-          type: 'input',
-          name: 'body',
-          message: '请输入详细描述(可选):',
-          when: module.exports.skipQuestions.includes('body')
-        },
+        // 如果不跳过body，就提示用户输入body
+        ...(module.exports.skipQuestions.includes('body')
+          ? []
+          : [
+              {
+                type: 'input',
+                name: 'body',
+                message: '请输入详细描述(可选):'
+              }
+            ]),
         {
           type: 'input',
           name: 'footer',
@@ -65,8 +67,6 @@ module.exports = {
       ])
       .then((answers) => {
         const { type, subject, body, footer } = answers
-        console.log(answers, 'answersanswers')
-        // 最后过滤，跳过body会存在undefined问题，issues以解决，但vscode插件没发布
         let commitMessage = `${type}: ${subject}`
 
         if (body && body.trim()) {

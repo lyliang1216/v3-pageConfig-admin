@@ -23,6 +23,7 @@ ElNotification({
 
 const a = ref<number>(0)
 a.value = 1
+
 a.value = 2
 </script>
 

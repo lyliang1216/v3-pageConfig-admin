@@ -11,7 +11,7 @@ module.exports = {
     { value: 'chore', name: 'chore: 构建过程或辅助工具的变动' },
     { value: 'revert', name: 'revert: 回滚到上一个版本' },
     { value: 'build', name: 'build: 编译相关的修改，例如发布版本、对项目构建或者依赖的改动' },
-    { value: 'ci', name: 'build: 持续集成修改' }
+    { value: 'ci', name: 'ci: 持续集成修改' }
   ], // 消息步骤，正常只需要选择
   messages: {
     type: '请选择提交类型:',
@@ -21,6 +21,8 @@ module.exports = {
     footer: '请输入要关闭的issue(可选):',
     confirmCommit: '确认使用以上信息提交？(y/n)'
   }, // 跳过问题：修改范围，自定义修改范围，详细描述，issue相关
-  skipQuestions: ['customScope', 'body', 'footer'], // subject描述文字长度最长是72
+  scopes: [],
+  allowCustomScopes: true,
+  skipQuestions: ['scope', 'customScope', 'body', 'footer'], // subject描述文字长度最长是72
   subjectLimit: 72
 }

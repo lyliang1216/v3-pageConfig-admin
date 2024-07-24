@@ -49,7 +49,7 @@ module.exports = {
           type: 'input',
           name: 'body',
           message: '请输入详细描述(可选):',
-          when: !module.exports.skipQuestions.includes('body')
+          when: module.exports.skipQuestions.includes('body')
         },
         {
           type: 'input',

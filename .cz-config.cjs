@@ -29,9 +29,7 @@ module.exports = {
   // 处理跳过或不填body出现undefined问题，git cz正常，vscode插件有问题，等版本发布后可去掉以下内容
   prompter(cz, commit) {
     const inquirer = cz.prompt
-
     inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'))
-
     inquirer
       .prompt([
         {

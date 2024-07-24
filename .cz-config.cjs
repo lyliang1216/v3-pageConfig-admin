@@ -23,12 +23,15 @@ module.exports = {
   },
   allowBreakingChanges: ['feat', 'fix'],
   allowCustomScopes: false,
-  skipQuestions: ['scope', 'customScope', 'body', 'footer', 'breaking'],
+  skipQuestions: ['scope', 'customScope', 'footer', 'breaking'],
   subjectLimit: 72,
   askForBreakingChangeFirst: false,
+  // 处理跳过或不填body出现undefined问题，git cz正常，vscode插件有问题，等版本发布后可去掉以下内容
   prompter(cz, commit) {
     const inquirer = cz.prompt
+
     inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'))
+
     inquirer
       .prompt([
         {
@@ -43,16 +46,12 @@ module.exports = {
           message: '请简要描述提交(必填):',
           validate: (input) => (input.length > 0 ? true : '提交信息不能为空')
         },
-        // 如果不跳过body，就提示用户输入body
-        ...(module.exports.skipQuestions.includes('body')
-          ? []
-          : [
-              {
-                type: 'input',
-                name: 'body',
-                message: '请输入详细描述(可选):'
-              }
-            ]),
+        {
+          type: 'input',
+          name: 'body',
+          message: '请输入详细描述(可选):',
+          when: !module.exports.skipQuestions.includes('body')
+        },
         {
           type: 'input',
           name: 'footer',
@@ -67,6 +66,7 @@ module.exports = {
       ])
       .then((answers) => {
         const { type, subject, body, footer } = answers
+
         let commitMessage = `${type}: ${subject}`
 
         if (body && body.trim()) {
